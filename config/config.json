@@ -1,0 +1,6 @@
+{
+    "MongoConnection": {
+        "ConnectionString": "mongodb://admin:server@localhost",
+        "Database": "NotesDB"
+    }
+}
