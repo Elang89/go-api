@@ -14,8 +14,8 @@ type MongoDbContext struct {
 var db mongo.Database
 
 // NewMongoDbContext returns a context object with a database, this is used in repositories
-func NewMongoDbContext(c config.Configuration) MongoDbContext {
-	connectionString := GenerateConnectionString(c)
+func NewMongoDbContext(c config.Configuration) *MongoDbContext {
+	connectionString := config.GenerateConnectionString(c)
 	db, err := mongo.NewClient(connectionString)
 
 	if err != nil {
