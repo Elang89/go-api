@@ -2,32 +2,35 @@ package database
 
 import (
 	"github.com/Elang89/go-api/config"
-	"gopkg.in/mgo.v2"
+	"github.com/mongodb/mongo-go-driver/mongo"
 )
-
-// MongoHostName is a constant for the host name of the mongo service
-const MongoHostName string = "mongodb://"
 
 // MongoDbContext contains the database that is used throughout the api
 type MongoDbContext struct {
-	database *mgo.Session
+	Database *mongo.Database
+	Notes    *mongo.Collection
 }
 
+var db mongo.Database
+
 // NewMongoDbContext returns a context object with a database, this is used in repositories
-func NewMongoDbContext(c config.Configuration) *MongoDbContext {
-	connectionString := generateConnectionString(c)
-	db, err := mgo.Dial(connectionString)
+func NewMongoDbContext(c config.Configuration) MongoDbContext {
+	connectionString := GenerateConnectionString(c)
+	db, err := mongo.NewClient(connectionString)
 
 	if err != nil {
 		panic(err)
 	}
 
-	context := MongoDbContext{database: db}
+	context := MongoDbContext{Database: db.Database(c.MongoConnection.Database)}
+
+	context.Notes = getNotesCollection(context)
+
 	return &context
 
 }
 
-func generateConnectionString(c config.Configuration) string {
-	connectionString := MongoHostName + c.MongoConnection.User + ":" + c.MongoConnection.Pwd + "@" + c.MongoConnection.Host
-	return connectionString
+// GetNotesCollection returns the notes collection from the database
+func getNotesCollection(context MongoDbContext) *mongo.Collection {
+	return db.Collection("Note")
 }

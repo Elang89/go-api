@@ -19,6 +19,9 @@ type Configuration struct {
 
 var config Configuration
 
+// MongoHostName is a constant for the host name of the mongo service
+const MongoHostName string = "mongodb://"
+
 // NewConfiguration creates a configuration object with the configuration options found in config.json
 func NewConfiguration() Configuration {
 	file, err := os.Open("config/config.json")
@@ -39,4 +42,10 @@ func NewConfiguration() Configuration {
 	}
 
 	return config
+}
+
+// GenerateConnectionString returns a s string with all connection details for a MongoDB database
+func GenerateConnectionString(c Configuration) string {
+	connectionString := MongoHostName + c.MongoConnection.User + ":" + c.MongoConnection.Pwd + "@" + c.MongoConnection.Host
+	return connectionString
 }
