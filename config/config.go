@@ -24,7 +24,7 @@ const MongoHostName string = "mongodb://"
 
 // NewConfiguration creates a configuration object with the configuration options found in config.json
 func NewConfiguration() Configuration {
-	file, err := os.Open("config/config.json")
+	file, err := os.Open("config.json")
 
 	if err != nil {
 		panic(err)

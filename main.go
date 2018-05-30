@@ -14,10 +14,9 @@ func main() {
 	//v1 := r.Group("/api")
 
 	config := config.NewConfiguration()
-	context := database.NewMongoDbContext(config)
+	dataContext := database.NewMongoDbContext(config)
 
-	result := context.Notes.Find()
-	fmt.Println(result)
+	fmt.Println(dataContext.Database.Name())
 
 	r.Run(":1323")
 }
