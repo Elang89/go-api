@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// Configuration object with all settings
 type Configuration struct {
 	MongoConnection struct {
 		Host     string `json:"Host"`
@@ -20,10 +21,10 @@ var config Configuration
 
 // NewConfiguration creates a configuration object with the configuration options found in config.json
 func NewConfiguration() Configuration {
-	file, err := os.Open("config.json")
+	file, err := os.Open("config/config.json")
 
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 	fmt.Println("Opening config.json...")
 
@@ -34,7 +35,7 @@ func NewConfiguration() Configuration {
 	err = json.Unmarshal(fileData, &config)
 
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	return config
