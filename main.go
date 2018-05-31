@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"context"
 
 	"github.com/Elang89/go-api/config"
 	"github.com/Elang89/go-api/database"
@@ -16,7 +16,7 @@ func main() {
 	config := config.NewConfiguration()
 	dataContext := database.NewMongoDbContext(config)
 
-	fmt.Println(dataContext.Database.Name())
+	result := dataContext.Notes.Find(context.Background())
 
 	r.Run(":1323")
 }
