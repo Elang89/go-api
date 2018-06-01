@@ -35,7 +35,16 @@ func GetAll(ctx *gin.Context) {
 
 // Post adds a note record to the database
 func Post(ctx *gin.Context) {
+	note := NewNote(ctx.PostForm("Body"), ctx.PostForm("UserId"))
+	err := AddNote(note)
 
+	if err != nil {
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"status": http.StatusUnprocessableEntity,
+			"message": "Note could not be inserted"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK})
 }
 
 // Put updates a note record in the database
