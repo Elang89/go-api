@@ -3,7 +3,6 @@ package database
 import (
 	"github.com/Elang89/go-api/config"
 	"github.com/globalsign/mgo"
-	"github.com/mongodb/mongo-go-driver/mongo"
 )
 
 // MongoDbContext contains the database that is used throughout the api
@@ -13,7 +12,7 @@ type MongoDbContext struct {
 	Notes    *mgo.Collection
 }
 
-var db mongo.Database
+var db mgo.Database
 
 // NewMongoDbContext returns a context object with a database, this is used in repositories
 func NewMongoDbContext(c config.Configuration) *MongoDbContext {
@@ -34,5 +33,5 @@ func NewMongoDbContext(c config.Configuration) *MongoDbContext {
 
 // GetNotesCollection returns the notes collection from the database
 func getNotesCollection(context MongoDbContext) *mgo.Collection {
-	return
+	return context.Database.C("Note")
 }
