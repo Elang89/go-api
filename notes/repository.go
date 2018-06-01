@@ -10,8 +10,8 @@ var databaseContext = database.NewMongoDbContext(
 	config.NewConfiguration())
 
 // GetAllNotes retrieves a collection of which contains all notes from the database
-func GetAllNotes() {
+func GetAllNotes() ([]Note, error) {
 	var notes []Note
-	err := databaseContext.Notes.Find(bson.M{}).All(&movies)
+	err := databaseContext.Notes.Find(bson.M{}).All(&notes)
 	return notes, err
 }

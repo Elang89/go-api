@@ -1,6 +1,8 @@
 package notes
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +17,20 @@ func RegisterNotes(router *gin.RouterGroup) {
 
 // GetAll gets all the records corresponding to notes
 func GetAll(ctx *gin.Context) {
+	notes, err := GetAllNotes()
 
+	if err != nil {
+		panic(err)
+	}
+
+	if len(notes) == 0 {
+		ctx.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound,
+			"message": "No notes found"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK,
+		"data": notes})
 }
 
 // Post adds a note record to the database
