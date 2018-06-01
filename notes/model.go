@@ -9,7 +9,7 @@ import (
 
 // Note is an object to represent a note saved on the database
 type Note struct {
-	InternalID bson.ObjectId `bson:"_id" json:"_id"`
+	InternalID bson.ObjectId `bson:"_id,omitempty" json:"_id,omitempty"`
 	ID         string        `bson:"Id" json:"id"`
 	Body       string        `bson:"Body" json:"body"`
 	CreatedOn  time.Time     `bson:"CreatedOn" json:"createdOn"`
