@@ -40,7 +40,7 @@ func Post(ctx *gin.Context) {
 
 	if err != nil {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"status": http.StatusUnprocessableEntity,
-			"message": "Note could not be inserted"})
+			"message": "Note could not be inserted", "error": err})
 		return
 	}
 
