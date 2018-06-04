@@ -85,6 +85,7 @@ func Delete(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound,
 			"message": "Could not delete note, note was not found", "error": err.Error()})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK})
