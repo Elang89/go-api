@@ -40,6 +40,6 @@ func UpdateNote(id string, note *Note) error {
 
 // RemoveNote removes a note from the notes collection in the database
 func RemoveNote(id string) error {
-	err := databaseContext.Notes.Remove(bson.M{"_id": id})
+	err := databaseContext.Notes.Remove(bson.M{"Id": id})
 	return err
 }
