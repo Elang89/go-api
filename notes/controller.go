@@ -49,15 +49,43 @@ func Post(ctx *gin.Context) {
 
 // Put updates a note record in the database
 func Put(ctx *gin.Context) {
+	id := ctx.Param("id")
+	note := NewNote(ctx.PostForm("Body"), ctx.PostForm("UserId"))
+	err := UpdateNote(id, note)
 
+	if err != nil {
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"status": http.StatusUnprocessableEntity,
+			"message": "Note could not be updated", "error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK})
 }
 
 // Get gets one record from the database
 func Get(ctx *gin.Context) {
+	id := ctx.Param("id")
+	note, err := GetNoteByID(id)
 
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound,
+			"message": "Note was not found", "error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK,
+		"data": note})
 }
 
 // Delete removes a record from the database
 func Delete(ctx *gin.Context) {
+	id := ctx.Param("id")
+	err := RemoveNote(id)
 
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound,
+			"message": "Could not delete note, note was not found", "error": err.Error()})
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK})
 }
