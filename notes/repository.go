@@ -34,7 +34,7 @@ func AddNote(note *Note) error {
 // UpdateNote updates a note in the notes collection in the database
 func UpdateNote(id string, note *Note) error {
 	newNote := NewNote(note.Body, note.ID)
-	err := databaseContext.Notes.Update(id, &newNote)
+	err := databaseContext.Notes.Update(bson.M{"Id": id}, &newNote)
 	return err
 }
 
