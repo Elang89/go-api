@@ -7,7 +7,6 @@ import (
 
 // MongoDbContext contains the database that is used throughout the api
 type MongoDbContext struct {
-	Session  *mgo.Session
 	Database *mgo.Database
 	Notes    *mgo.Collection
 }
@@ -23,7 +22,7 @@ func NewMongoDbContext(c config.Configuration) *MongoDbContext {
 		panic(err)
 	}
 
-	context := MongoDbContext{Session: session, Database: session.DB(c.MongoConnection.Database)}
+	context := MongoDbContext{Database: session.DB(c.MongoConnection.Database)}
 
 	context.Notes = getNotesCollection(context)
 
