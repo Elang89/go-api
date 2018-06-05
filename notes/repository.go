@@ -33,7 +33,7 @@ func AddNote(note *Note) error {
 
 // UpdateNote updates a note in the notes collection in the database
 func UpdateNote(note *Note) error {
-	err := databaseContext.Notes.UpdateId(bson.M{"_id": note.InternalID}, note)
+	err := databaseContext.Notes.Update(bson.M{"_id": note.InternalID}, note)
 	return err
 }
 
