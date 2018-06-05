@@ -20,7 +20,7 @@ func GetAllNotes() ([]Note, error) {
 // GetNoteByID retrieves a single note from the notes collection from the database
 func GetNoteByID(id string) (Note, error) {
 	var note Note
-	err := databaseContext.Notes.Find(bson.M{"_id": id}).One(&note)
+	err := databaseContext.Notes.FindId(bson.ObjectIdHex(id)).One(&note)
 	return note, err
 }
 
@@ -33,12 +33,12 @@ func AddNote(note *Note) error {
 
 // UpdateNote updates a note in the notes collection in the database
 func UpdateNote(note *Note) error {
-	err := databaseContext.Notes.Update(bson.M{"_id": note.InternalID}, note)
+	err := databaseContext.Notes.UpdateId(bson.M{"_id": note.InternalID}, note)
 	return err
 }
 
 // RemoveNote removes a note from the notes collection in the database
 func RemoveNote(id string) error {
-	err := databaseContext.Notes.Remove(bson.M{"_id": id})
+	err := databaseContext.Notes.RemoveId(bson.ObjectIdHex(id))
 	return err
 }
