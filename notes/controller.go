@@ -10,7 +10,7 @@ import (
 func RegisterNotes(router *gin.RouterGroup) {
 	router.POST("/", Post)
 	router.GET("/", GetAll)
-	router.PUT("/:id", Put)
+	router.PUT("/", Put)
 	router.GET("/:id", Get)
 	router.DELETE("/:id", Delete)
 }
@@ -49,9 +49,9 @@ func Post(ctx *gin.Context) {
 
 // Put updates a note record in the database
 func Put(ctx *gin.Context) {
-	id := ctx.Param("id")
-	note := NewNote(ctx.PostForm("Body"), ctx.PostForm("UserId"))
-	err := UpdateNote(id, note)
+	note := MakeNoteFromData(ctx.PostForm("_id"), ctx.PostForm("Body"),
+		ctx.PostForm("CreatedOn"), ctx.PostForm("UserID"))
+	err := UpdateNote(note)
 
 	if err != nil {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"status": http.StatusUnprocessableEntity,
