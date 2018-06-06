@@ -1,7 +1,8 @@
 package database
 
 import (
-	"github.com/Elang89/go-api/config"
+	"go-api/config"
+
 	"github.com/globalsign/mgo"
 )
 

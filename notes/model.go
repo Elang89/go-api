@@ -16,32 +16,19 @@ type Note struct {
 }
 
 // NewNote creates a new note struct and returns it
-func NewNote(body string, userID string) *Note {
+func NewNote() *Note {
 	note := Note{
-		Body:      body,
 		CreatedOn: time.Now(),
 		UpdatedOn: time.Now(),
-		UserID:    userID,
 	}
 
 	return &note
 }
 
-// MakeNoteFromData creates a new note with the data provided in the parameters
-func MakeNoteFromData(internalID string, body string, createdOn string, userID string) *Note {
-	layout := "2006-01-02T15:04:05-0700"
-	date, err := time.Parse(layout, createdOn)
-
-	if err != nil {
-		panic(err)
-	}
-
+// CreateNoteForUpdate creates a new note with the data provided in the parameters
+func CreateNoteForUpdate() *Note {
 	note := Note{
-		InternalID: bson.ObjectIdHex(internalID),
-		Body:       body,
-		CreatedOn:  date,
-		UpdatedOn:  time.Now(),
-		UserID:     userID,
+		UpdatedOn: time.Now(),
 	}
 
 	return &note

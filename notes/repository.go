@@ -1,10 +1,10 @@
 package notes
 
 import (
-	"github.com/Elang89/go-api/config"
-	"github.com/Elang89/go-api/database"
+	"go-api/config"
+	"go-api/database"
+
 	"github.com/globalsign/mgo/bson"
-	"github.com/google/uuid"
 )
 
 var databaseContext = database.NewMongoDbContext(
@@ -26,14 +26,13 @@ func GetNoteByID(id string) (Note, error) {
 
 // AddNote adds a note to the note collection in the database
 func AddNote(note *Note) error {
-	newNote := NewNote(note.Body, uuid.New().String())
-	err := databaseContext.Notes.Insert(&newNote)
+	err := databaseContext.Notes.Insert(note)
 	return err
 }
 
 // UpdateNote updates a note in the notes collection in the database
-func UpdateNote(note *Note) error {
-	err := databaseContext.Notes.Update(bson.M{"_id": note.InternalID}, note)
+func UpdateNote(id string, note *Note) error {
+	err := databaseContext.Notes.UpdateId(bson.ObjectIdHex(id), note)
 	return err
 }
 

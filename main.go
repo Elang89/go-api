@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/Elang89/go-api/notes"
+	"go-api/notes"
+
 	"github.com/gin-gonic/gin"
 )
 
